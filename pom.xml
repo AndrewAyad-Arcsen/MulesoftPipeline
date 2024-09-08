@@ -34,7 +34,7 @@
                         <password>${anypoint.password}</password>
                         <applicationName>${app.name}</applicationName>
                         <environment>${env}</environment>
-                        <region>EU</region>
+                        <region>eu-central-1</region>
                     </cloudHubDeployment>
                     <classifier>mule-application</classifier>
                 </configuration>
