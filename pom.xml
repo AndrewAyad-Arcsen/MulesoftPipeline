@@ -30,11 +30,14 @@
                     <cloudHubDeployment>
                         <uri>https://eu1.anypoint.mulesoft.com</uri>
                         <muleVersion>${app.runtime}</muleVersion>
-                        <username>${anypoint.username}</username>
-                        <password>${anypoint.password}</password>
+                        <connectedAppClientId>${client.id}</connectedAppClientId>
+                        <connectedAppClientSecret>${client.secret}</connectedAppClientSecret>
+                        <connectedAppGrantType>client_credentials</connectedAppGrantType>
                         <applicationName>${app.name}</applicationName>
                         <environment>${env}</environment>
                         <region>eu-central-1</region>
+                        <workers>1</workers>
+						<objectStoreV2>true</objectStoreV2>
                     </cloudHubDeployment>
                     <classifier>mule-application</classifier>
                 </configuration>
