@@ -85,6 +85,12 @@
 			<url>https://repository.mulesoft.org/releases/</url>
 			<layout>default</layout>
 		</repository>
+        <repository>
+            <id>PrivateExchangeRepository</id>
+            <name>Private Exchange repository</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/2752a6fb-3fce-4c37-bdf6-e58dfaaa7dc0/maven</url>
+            <layout>default</layout>
+          </repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -98,4 +104,14 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
+    <distributionManagement>
+        <!-- Replace ORGANIZATION_ID -->
+        <repository>
+            <id>PrivateExchangeRepository</id>
+            <name>Private Exchange repository</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/2752a6fb-3fce-4c37-bdf6-e58dfaaa7dc0/maven</url>
+            <layout>default</layout>
+         </repository>
+    </distributionManagement>
 </project>
