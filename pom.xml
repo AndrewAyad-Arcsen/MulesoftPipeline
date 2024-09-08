@@ -12,7 +12,7 @@
         <app.runtime>4.5.1</app.runtime>
         <mule.maven.plugin.version>4.0.0</mule.maven.plugin.version>
         <app.name>testApi</app.name>
-		<env>Develop</env>
+        <env>Develop</env>
     </properties>
     <build>
         <plugins>
@@ -27,20 +27,20 @@
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-					<cloudHubDeployment>
-						<uri>https://eu1.anypoint.mulesoft.com</uri>
-						<muleVersion>${app.runtime}</muleVersion>
-						<username>${anypoint.username}</username>
-						<password>${anypoint.password}</password>
-						<applicationName>${app.name}</applicationName>
-						<environment>${env}</environment>
-						<workerType>MICRO</workerType>
-						<region>de-c1</region>
-						<workers>1</workers>
+                    <cloudHubDeployment>
+                        <uri>https://eu1.anypoint.mulesoft.com</uri>
+                        <muleVersion>${app.runtime}</muleVersion>
+                        <username>${anypoint.username}</username>
+                        <password>${anypoint.password}</password>
+                        <applicationName>${app.name}</applicationName>
+                        <environment>${env}</environment>
+                        <workerType>MICRO</workerType>
+                        <region>de-c1</region>
+                        <workers>1</workers>
                         <objectStoreV2>true</objectStoreV2>
-					</cloudHubDeployment>
-					<classifier>mule-application</classifier>
-				</configuration>
+                    </cloudHubDeployment>
+                    <classifier>mule-application</classifier>
+                </configuration>
             </plugin>
         </plugins>
     </build>
