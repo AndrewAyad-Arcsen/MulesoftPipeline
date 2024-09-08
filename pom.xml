@@ -73,7 +73,7 @@
     </dependencies>
     <repositories>
         <repository>
-            <id>anypoint-exchange-v3</id>
+            <id>PrivateExchangeRepository</id>
             <name>Anypoint Exchange</name>
             <url>https://maven.eu1.anypoint.mulesoft.com/api/v3/maven</url>
             <layout>default</layout>
