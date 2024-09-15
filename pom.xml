@@ -12,7 +12,7 @@
         <app.runtime>4.7.3</app.runtime>
         <mule.maven.plugin.version>4.1.1</mule.maven.plugin.version>
         <app.name>aaaaa</app.name>
-        <env>Sandbox</env>
+        <env>Develop</env>
         <targetName>Cloudhub-EU-Central-1</targetName>
     </properties>
     <build>
