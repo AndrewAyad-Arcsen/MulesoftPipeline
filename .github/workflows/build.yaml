@@ -32,6 +32,14 @@ jobs:
           mvn versions:set -DnewVersion=1.0.${{ github.run_number }}-SNAPSHOT
           mvn versions:commit
 
+      - name: Commit version change
+        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Update version to 1.0.${{ github.run_number }}-SNAPSHOT"
+          git push
+
       - name: Set environment variables
         id: set_env
         run: |
