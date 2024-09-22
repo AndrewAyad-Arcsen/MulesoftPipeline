@@ -26,25 +26,17 @@ jobs:
           distribution: "zulu"
           java-version: 8
 
-      - name: Increment version
-        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
-        run: |
-          mvn versions:set -DnewVersion=1.0.${{ github.run_number }}-SNAPSHOT
-          mvn versions:commit
-
-      - name: Commit version change
-        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -am "Update version to 1.0.${{ github.run_number }}-SNAPSHOT"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:develop
-
       - name: Set environment variables
         id: set_env
         run: |
           echo "env=${{ github.event_name == 'push' && 'Develop' || github.base_ref == 'qa' && 'QA' || 'Production' }}" >> $GITHUB_ENV
           echo "app_name_prefix=${{ github.event_name == 'push' && 'Dev-' || github.base_ref == 'qa' && 'QA-' || 'Prod-' }}" >> $GITHUB_ENV
+          echo "new_version=1.0.${{ github.run_number }}-SNAPSHOT" >> $GITHUB_ENV
+
+      - name: Increment version
+        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+        run: |
+          mvn versions:set -DnewVersion=${{ env.new_version }} -DgenerateBackupPoms=false
 
       - name: Publish to Exchange
         run: |
