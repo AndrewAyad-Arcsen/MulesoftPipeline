@@ -4,7 +4,7 @@ on:
   push:
     branches: [ develop ]
   pull_request:
-    branches: [ develop ]
+    branches: [ develop, qa, production ]  # Specify branches for PRs
     
 jobs:         
   build:
@@ -25,14 +25,26 @@ jobs:
         with:
           distribution: "zulu"
           java-version: 8
-      
+
+      - name: Increment version
+        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+        run: |
+          mvn versions:set -DnewVersion=1.0.${{ github.run_number }}-SNAPSHOT
+          mvn versions:commit
+
       - name: Publish to Exchange
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
+          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"\
+          -Denv=${{ github.event_name == 'push' ? 'Develop' : github.base_ref == 'qa' ? 'QA' : 'Production' }} \
+          -Dapp.namePrefix=${{ github.event_name == 'push' ? 'Dev-' : github.base_ref == 'qa' ? 'QA-' : 'Prod-' }} \
+          -Dapp.name=test1
       - name: Deploy to CloudHub 2.0
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" 
+          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
+          -Denv=${{ github.event_name == 'push' ? 'Develop' : github.base_ref == 'qa' ? 'QA' : 'Production' }} \
+          -Dapp.namePrefix=${{ github.event_name == 'push' ? 'Dev-' : github.base_ref == 'qa' ? 'QA-' : 'Prod-' }} \
+          -Dapp.name=test1
