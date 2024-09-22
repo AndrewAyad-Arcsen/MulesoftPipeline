@@ -2,17 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>2752a6fb-3fce-4c37-bdf6-e58dfaaa7dc0</groupId>
-    <artifactId>test3</artifactId>
+    <artifactId>test4</artifactId>
     <version>1.0.0</version>
     <packaging>mule-application</packaging>
-    <name>test3</name>
+    <name>${app.namePrefix}${app.name}</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <app.runtime>4.7.3</app.runtime>
         <mule.maven.plugin.version>4.1.1</mule.maven.plugin.version>
-        <app.name>test3</app.name>
-        <env>Develop</env>
         <targetName>Cloudhub-EU-Central-1</targetName>
     </properties>
     <build>
@@ -36,7 +34,7 @@
                         <target>${targetName}</target>
                         <muleVersion>${app.runtime}</muleVersion>
                         <server>Repository</server>
-                        <applicationName>${app.name}</applicationName>
+                        <applicationName>${app.namePrefix}${app.name}</applicationName>
                         <releaseChannel>Edge</releaseChannel>
                         <replicas>1</replicas>
                         <vCores>0.1</vCores>
