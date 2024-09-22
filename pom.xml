@@ -5,12 +5,14 @@
     <artifactId>test3</artifactId>
     <version>1.0.0</version>
     <packaging>mule-application</packaging>
-    <name>${app.namePrefix}${app.name}</name>
+    <name>test3</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <app.runtime>4.7.3</app.runtime>
         <mule.maven.plugin.version>4.1.1</mule.maven.plugin.version>
+        <app.name>test3</app.name>
+        <env>Develop</env>
         <targetName>Cloudhub-EU-Central-1</targetName>
     </properties>
     <build>
@@ -34,7 +36,7 @@
                         <target>${targetName}</target>
                         <muleVersion>${app.runtime}</muleVersion>
                         <server>Repository</server>
-                        <applicationName>${app.namePrefix}${app.name}</applicationName>
+                        <applicationName>${app.name}</applicationName>
                         <releaseChannel>Edge</releaseChannel>
                         <replicas>1</replicas>
                         <vCores>0.1</vCores>
