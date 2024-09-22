@@ -32,19 +32,25 @@ jobs:
           mvn versions:set -DnewVersion=1.0.${{ github.run_number }}-SNAPSHOT
           mvn versions:commit
 
+      - name: Set environment variables
+        id: set_env
+        run: |
+          echo "env=${{ github.event_name == 'push' && 'Develop' || github.base_ref == 'qa' && 'QA' || 'Production' }}" >> $GITHUB_ENV
+          echo "app_name_prefix=${{ github.event_name == 'push' && 'Dev-' || github.base_ref == 'qa' && 'QA-' || 'Prod-' }}" >> $GITHUB_ENV
+
       - name: Publish to Exchange
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"\
-          -Denv=${{ github.event_name == 'push' ? 'Develop' : github.base_ref == 'qa' ? 'QA' : 'Production' }} \
-          -Dapp.namePrefix=${{ github.event_name == 'push' ? 'Dev-' : github.base_ref == 'qa' ? 'QA-' : 'Prod-' }} \
+          -Denv=${{ env.env }} \
+          -Dapp.namePrefix=${{ env.app_name_prefix }}
           -Dapp.name=test1
       - name: Deploy to CloudHub 2.0
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
-          -Denv=${{ github.event_name == 'push' ? 'Develop' : github.base_ref == 'qa' ? 'QA' : 'Production' }} \
-          -Dapp.namePrefix=${{ github.event_name == 'push' ? 'Dev-' : github.base_ref == 'qa' ? 'QA-' : 'Prod-' }} \
+          -Denv=${{ env.env }} \
+          -Dapp.namePrefix=${{ env.app_name_prefix }}
           -Dapp.name=test1
