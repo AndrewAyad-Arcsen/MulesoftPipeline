@@ -31,7 +31,7 @@ jobs:
         run: |
           echo "env=${{ github.event_name == 'push' && 'Develop' || github.base_ref == 'qa' && 'QA' || 'Production' }}" >> $GITHUB_ENV
           echo "app_name_prefix=${{ github.event_name == 'push' && 'Dev-' || github.base_ref == 'qa' && 'QA-' || 'Prod-' }}" >> $GITHUB_ENV
-          echo "new_version=1.0.${{ github.run_number }}-SNAPSHOT" >> $GITHUB_ENV
+          echo "new_version=1.0.${{ github.run_number }}" >> $GITHUB_ENV
 
       - name: Increment version
         if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
