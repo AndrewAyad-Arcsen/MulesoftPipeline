@@ -44,7 +44,7 @@ jobs:
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"\
           -Denv=${{ env.env }} \
-          -Dapp.namePrefix=${{ env.app_name_prefix }}
+          -Dapp.namePrefix=${{ env.app_name_prefix }} \
           -Dapp.name=test1
       - name: Deploy to CloudHub 2.0
         run: |
@@ -52,5 +52,5 @@ jobs:
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
           -Denv=${{ env.env }} \
-          -Dapp.namePrefix=${{ env.app_name_prefix }}
+          -Dapp.namePrefix=${{ env.app_name_prefix }} \
           -Dapp.name=test1
