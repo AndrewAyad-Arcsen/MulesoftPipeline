@@ -2,9 +2,9 @@ name: Publish to Exchange & Deploy to CH2.0
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ develop, qa, production ]  # Specify branches for PRss
     
 jobs:         
   build:
@@ -25,14 +25,32 @@ jobs:
         with:
           distribution: "zulu"
           java-version: 8
-      
+
+      - name: Set environment variables
+        id: set_env
+        run: |
+          echo "env=${{ github.event_name == 'push' && 'Develop' || github.base_ref == 'qa' && 'QA' || 'Production' }}" >> $GITHUB_ENV
+          echo "app_name_prefix=${{ github.event_name == 'push' && 'dev-' || github.base_ref == 'qa' && 'qa-' || 'prod-' }}" >> $GITHUB_ENV
+          echo "new_version=1.0.${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Increment version
+        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+        run: |
+          mvn versions:set -DnewVersion=${{ env.new_version }} -DgenerateBackupPoms=false
+
       - name: Publish to Exchange
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
+          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
+          -Denv=${{ env.env }} \
+          -Dapp.namePrefix=${{ env.app_name_prefix }} \
+          -Dapp.name=test4
       - name: Deploy to CloudHub 2.0
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" 
+          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
+          -Denv=${{ env.env }} \
+          -Dapp.namePrefix=${{ env.app_name_prefix }} \
+          -Dapp.name=test4
