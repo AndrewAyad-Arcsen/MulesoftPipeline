@@ -4,7 +4,7 @@ on:
   push:
     branches: [ develop ]
   pull_request:
-    branches: [ develop, qa, production ]  # Specify branches for PRs
+    branches: [ develop, qa, production ]  # Specify branches for PRss
     
 jobs:         
   build:
