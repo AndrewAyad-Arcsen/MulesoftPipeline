@@ -45,7 +45,7 @@ jobs:
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"\
           -Denv=${{ env.env }} \
           -Dapp.namePrefix=${{ env.app_name_prefix }} \
-          -Dapp.name=test1
+          -Dapp.name=test2
       - name: Deploy to CloudHub 2.0
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
@@ -53,4 +53,4 @@ jobs:
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
           -Denv=${{ env.env }} \
           -Dapp.namePrefix=${{ env.app_name_prefix }} \
-          -Dapp.name=test1
+          -Dapp.name=test2
